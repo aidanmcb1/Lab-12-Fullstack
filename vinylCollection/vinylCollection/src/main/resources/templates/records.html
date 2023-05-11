@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Record Collection</title>
 </head>
 <body>
 
 	<h1>Record Collection</h1>
-	<table>
-		<tr>
+	<br>
+	<!-- Alert box for no records -->
+	<div th:if="${records.isEmpty() == true}" class="alert alert-info">
+	<h3 th:if="${records.isEmpty() == true}">No records exist</h3>
+	<h5 th:if="${records.isEmpty() == true}">Add a record below</h5>
+	</div>
+	<!-- table and striping -->
+	<table class="table table-striped">
+		<tr th:if="${records.isEmpty() != true}">
 			<td>ID</td>
 			<td>Title</td>
 			<td>Artist</td>
@@ -17,6 +26,7 @@
 			<td>Tracks</td>
 			<td>Size</td>
 			<td>Damaged?</td>
+			<td>More Info</td>
 		</tr>
 		<tr th:each="records : ${records}">
 		<td th:text="${records.id}"></td>
@@ -28,8 +38,11 @@
 		<td th:text="${records.size}"></td>
 		<td th:if="${records.damaged}">Yes</td>
 		<td th:if="${records.damaged == false}">No</td>
+		<td><a th:href="@{'records/' + ${records.id}}">View More</a></td>
 		</tr>
 	</table>
-
+	<br>
+	<!-- create entry button in blue -->
+	<a class="btn btn-primary" th:href="@{/add-record}">Add a record</a>
 </body>
 </html>

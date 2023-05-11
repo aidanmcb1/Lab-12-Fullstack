@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Record {
@@ -13,17 +17,28 @@ public class Record {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public long id;
 	
+	@NotEmpty(message="Please enter a title")
+	@Size(max=50, message="May not be larger than 50 characters")
 	public String title;
 	
+	@NotEmpty(message="Please enter an album")
+	@Size(max=40, message="May not be larger than 40 characters")
 	public String artist;
 	
+	@NotEmpty(message="Please enter a label")
+	@Size(max=40, message="May not be larger than 40 characters")
 	public String label;
 	
+	@Min(value=1930, message="Must have been released on or after 1930")
 	public int releaseyear;
 	
+	@Min(value=1, message="Must be at least 1")
+	@Max(value=20, message="Must be less than 20")
 	public int tracks;
 	
-	public int size;
+	
+	public String size;
+	
 	
 	public boolean damaged;
 
@@ -75,11 +90,11 @@ public class Record {
 		this.tracks = tracks;
 	}
 
-	public int getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
